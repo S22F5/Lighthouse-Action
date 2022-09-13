@@ -1,0 +1,35 @@
+name: lighthouse
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+      
+      - name: Install dependencies
+        run: npm install -g lighthouse http-server && export DISPLAY=$HOST_IP:10.0 && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo apt install ./google-chrome-stable_current_amd64.deb
+        
+      - name: Host Website to localhost
+        run:  http-server -g ./home.html & dir
+        
+      - name: Audit with Lighthouse 
+        run: lighthouse http://127.0.0.1:8080 --output=html --output-path=./lighthouse-results.html --chrome-flags="--headless --no-sandbox" && dir
+        
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          # Artifact name
+          name: lighthousereport
+          path: ./lighthouse-results.html
