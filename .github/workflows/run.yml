@@ -25,11 +25,11 @@ jobs:
         run:  http-server -g ./home.html & dir
         
       - name: Audit with Lighthouse 
-        run: lighthouse http://127.0.0.1:8080 --output=csv --output-path=./lighthouse-results.csv --chrome-flags="--headless --no-sandbox" && dir
+        run: lighthouse http://127.0.0.1:8080 --output=csv --output-path=./lighthouse-results.csv --gather-mode --chrome-flags="--headless --no-sandbox" && dir
         
       - name: Upload Artifact
         uses: actions/upload-artifact@v3.1.0
         with:
           # Artifact name
           name: lighthousereport
-          path: ./lighthouse-results.html
+          path: ./lighthouse-results.csv
