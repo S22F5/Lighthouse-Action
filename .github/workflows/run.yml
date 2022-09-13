@@ -32,4 +32,4 @@ jobs:
         with:
           # Artifact name
           name: lighthousereport
-          path: ./lighthouse-results.html ./latest-run
+          path: latest-run/
