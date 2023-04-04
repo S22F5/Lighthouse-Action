@@ -22,10 +22,10 @@ jobs:
         run: npm install -g lighthouse http-server && export DISPLAY=$HOST_IP:10.0 && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo apt install ./google-chrome-stable_current_amd64.deb
         
       - name: Host Website to localhost
-        run:  http-server -g ./home.html & dir
+        run:  http-server -g index.html & ls
         
       - name: Audit with Lighthouse 
-        run: lighthouse http://127.0.0.1:8080 --output=html --output-path=./lighthouse-results.html --chrome-flags="--headless --no-sandbox" && dir
+        run: lighthouse http://127.0.0.1:8080 --output=html --output-path=./lighthouse-results.html --preset=desktop --chrome-flags="--headless --no-sandbox"
         
       - name: Upload Artifact
         uses: actions/upload-artifact@v3.1.0
